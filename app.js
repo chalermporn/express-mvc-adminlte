@@ -1,5 +1,7 @@
 var express = require('express');  
 var app = express();  
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');  
 var path = require('path');  
 var port = process.env.PORT || 1995; 
@@ -7,6 +9,8 @@ var port = process.env.PORT || 1995;
 app.use(express.static(path.join(__dirname, 'assets')));  
 app.use(bodyParser.urlencoded({ extended: true }));  
 app.use(bodyParser.json());  
+app.use(logger('dev'));
+app.use(cookieParser());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,9 +30,9 @@ console.log('\n================   •?((¯°·._.• ţµąɲ ąɲh ƶɨρρ¥ �
 global.connection = require('./config/database.js');
 connection.connect(function(err){
 if(!err) {
-    console.log("Database is connected ...");    
+    console.log("Database is connected ...\nLogger: \n");    
 } else {
-    console.log("Error connecting database ...");    
+    console.log("Error connecting database ...\nLogger: \n");    
 }
 });
 
@@ -36,4 +40,4 @@ if(!err) {
 
 
 //open default browser
-opn('http://localhost:'+port); 
+opn('http://localhost:'+port+"/gearman"); 
